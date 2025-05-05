@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 class Node
 {
 public:
@@ -26,14 +25,21 @@ int heuristic(Node *start, Node *end)
 vector<Node *> aStar(vector<vector<Node>> &grid, Node *start, Node *end)
 {
 
-    auto compareNodes = [](Node *a, Node *b)
-    { return a->f > b->f; };
+    // Define a comparator for Node*
+    struct CompareNodes
+    {
+        bool operator()(Node *a, Node *b)
+        {
+            return a->f > b->f; // Min-heap based on 'f'
+        }
+    };
 
-    priority_queue<Node *, vector<Node *>, decltype(compareNodes)> nodesToVisit(compareNodes);
+    // Use the comparator in the priority queue
+    priority_queue<Node *, vector<Node *>, CompareNodes> nodesToVisit;
 
     set<Node *> openSet;
 
-    // Add the start node to the open list
+
     start->g = 0;
     start->h = heuristic(start, end);
     start->f = start->g + start->h;
@@ -65,7 +71,6 @@ vector<Node *> aStar(vector<vector<Node>> &grid, Node *start, Node *end)
 
         // Mark the node as visited
         current->visited = true;
-
 
         // Generate children
         for (int dx = -1; dx <= 1; dx++)
@@ -103,11 +108,6 @@ vector<Node *> aStar(vector<vector<Node>> &grid, Node *start, Node *end)
                         child->h = h;
                         child->f = f;
 
-                        // Print f values of children
-                        cout << " child (" << child->x << ", " << child->y << "): ";
-                        cout << "g = " << g << ", h = " << h << ", f = " << f << endl;
-
-                        // Push the child to the Q
                         nodesToVisit.push(child);
                         openSet.insert(child);
                     }
@@ -115,15 +115,6 @@ vector<Node *> aStar(vector<vector<Node>> &grid, Node *start, Node *end)
             }
         }
 
-        //  print the selected node with the minimum f value
-        if (!nodesToVisit.empty())
-        {
-            Node *selectedNode = nodesToVisit.top();
-            cout << endl;
-            cout << "---->Selected node for visit: (" << selectedNode->x << ", " << selectedNode->y << ") ";
-            cout << "with f = " << selectedNode->f << endl;
-            cout << endl;
-        }
     }
 
     // No solution found
@@ -150,11 +141,11 @@ void displayGrid(const vector<vector<Node>> &grid)
         cout << '\n';
     }
     cout << '\n';
-    for (auto &node : obstacles)
-    {
-        cout << "Obstacle at: (" << node.x << ", " << node.y << ")\n";
-    }
-    cout << '\n';
+    // for (auto &node : obstacles)
+    // {
+    //     cout << "Obstacle at: (" << node.x << ", " << node.y << ")\n";
+    // }
+    // cout << '\n';
 }
 
 int main()
