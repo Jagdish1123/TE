@@ -39,21 +39,72 @@ pair<int, vector<Job>> greedyJobScheduling(vector<Job> &jobs)
 
     return make_pair(total_profit, scheduled_jobs);
 }
-
 int main()
 {
-    // id, processing_time, profit, deadline
-    vector<Job> jobs = {{1, 5, 20, 2}, {2, 2, 10, 1}, {3, 3, 15, 3}, {4, 2, 40, 3}};
-
-    pair<int, vector<Job>> result = greedyJobScheduling(jobs);
-
-    cout << "Total profit earned: " << result.first << endl;
+    // Test Case 1: Basic test case
+    vector<Job> jobs1 = {{1, 5, 20, 2}, {2, 2, 10, 1}, {3, 3, 15, 3}, {4, 2, 40, 3}};
+    pair<int, vector<Job>> result1 = greedyJobScheduling(jobs1);
+    cout << "Test Case 1:\n";
+    cout << "Total profit earned: " << result1.first << endl;
     cout << "Scheduled jobs: \n";
-    for (Job &job : result.second)
+    for (Job &job : result1.second)
     {
         cout << "Job ID: " << job.id << ", Processing time: " << job.processing_time
              << ", Profit: " << job.profit << ", Deadline: " << job.deadline << endl;
     }
+    cout << endl;
+
+    // Test Case 2: Jobs with overlapping deadlines
+    vector<Job> jobs2 = {{1, 2, 50, 2}, {2, 1, 60, 2}, {3, 2, 30, 2}, {4, 1, 40, 2}};
+    pair<int, vector<Job>> result2 = greedyJobScheduling(jobs2);
+    cout << "Test Case 2:\n";
+    cout << "Total profit earned: " << result2.first << endl;
+    cout << "Scheduled jobs: \n";
+    for (Job &job : result2.second)
+    {
+        cout << "Job ID: " << job.id << ", Processing time: " << job.processing_time
+             << ", Profit: " << job.profit << ", Deadline: " << job.deadline << endl;
+    }
+    cout << endl;
+
+    // Test Case 3: Jobs with zero profit
+    vector<Job> jobs3 = {{1, 2, 0, 2}, {2, 1, 0, 1}, {3, 3, 0, 3}, {4, 2, 0, 3}};
+    pair<int, vector<Job>> result3 = greedyJobScheduling(jobs3);
+    cout << "Test Case 3:\n";
+    cout << "Total profit earned: " << result3.first << endl;
+    cout << "Scheduled jobs: \n";
+    for (Job &job : result3.second)
+    {
+        cout << "Job ID: " << job.id << ", Processing time: " << job.processing_time
+             << ", Profit: " << job.profit << ", Deadline: " << job.deadline << endl;
+    }
+    cout << endl;
+
+    // Test Case 4: Jobs that cannot be scheduled due to tight deadlines
+    vector<Job> jobs4 = {{1, 5, 50, 2}, {2, 6, 60, 3}, {3, 7, 70, 4}};
+    pair<int, vector<Job>> result4 = greedyJobScheduling(jobs4);
+    cout << "Test Case 4:\n";
+    cout << "Total profit earned: " << result4.first << endl;
+    cout << "Scheduled jobs: \n";
+    for (Job &job : result4.second)
+    {
+        cout << "Job ID: " << job.id << ", Processing time: " << job.processing_time
+             << ", Profit: " << job.profit << ", Deadline: " << job.deadline << endl;
+    }
+    cout << endl;
+
+    // Test Case 5: Single job
+    vector<Job> jobs5 = {{1, 2, 100, 5}};
+    pair<int, vector<Job>> result5 = greedyJobScheduling(jobs5);
+    cout << "Test Case 5:\n";
+    cout << "Total profit earned: " << result5.first << endl;
+    cout << "Scheduled jobs: \n";
+    for (Job &job : result5.second)
+    {
+        cout << "Job ID: " << job.id << ", Processing time: " << job.processing_time
+             << ", Profit: " << job.profit << ", Deadline: " << job.deadline << endl;
+    }
+    cout << endl;
 
     return 0;
 }

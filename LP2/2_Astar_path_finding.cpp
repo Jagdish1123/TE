@@ -141,11 +141,11 @@ void displayGrid(const vector<vector<Node>> &grid)
         cout << '\n';
     }
     cout << '\n';
-    // for (auto &node : obstacles)
-    // {
-    //     cout << "Obstacle at: (" << node.x << ", " << node.y << ")\n";
-    // }
-    // cout << '\n';
+    for (auto &node : obstacles)
+    {
+        cout << "Obstacle at: (" << node.x << ", " << node.y << ")\n";
+    }
+    cout << '\n';
 }
 
 int main()

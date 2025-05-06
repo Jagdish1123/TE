@@ -50,7 +50,7 @@ void djikshtras(vector<Edge> &edges, int V, int src)
 
 int main()
 {
-    // Define edges in the same format as the example {src, dest, weight}
+    //  {src, dest, weight}
     vector<Edge> edges = {
         {0, 1, 2}, {0, 2, 3}, {1, 2, 1}, {1, 3, 4}, {3, 4, 5}};
     int V = 5;

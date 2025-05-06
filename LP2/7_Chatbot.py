@@ -1,131 +1,53 @@
-import nltk
-import re
+import gradio as gr
 from nltk.chat.util import Chat, reflections
 
-products = {
-    "Wireless Earbuds": {
-        "info": "Compact wireless earbuds with noise cancellation, 24-hour battery life, and IPX5 water resistance.",
-        "stock": True
-    },
-    "Gaming Mouse": {
-        "info": "High-precision gaming mouse with 16000 DPI, RGB lighting, and 8 programmable buttons.",
-        "stock": False
-    },
-    "4K Monitor": {
-        "info": "27-inch 4K UHD monitor with HDR10, 144Hz refresh rate, and built-in speakers.",
-        "stock": True
-    },
-    "Bluetooth Speaker": {
-        "info": "Portable Bluetooth speaker with 12 hours playtime and deep bass.",
-        "stock": True
-    },
-    "Laptop Stand": {
-        "info": "Adjustable aluminum laptop stand suitable for all screen sizes, with cooling support.",
-        "stock": False
-    }
-}
-
-class AdvancedEcomChat(Chat):
-    def __init__(self, pairs, reflections):
-        super().__init__(pairs, reflections)
-        self.context = None
-        self.last_product_query = None
-
-    def respond(self, str_):
-        str_ = str_.lower().strip()
-
-        if self.context=="complaint":
-            with open("logs.txt", 'a') as f:
-                f.write(str_ + "\n\n")
-            self.context=None
-            return "Complaint logged. You will be contacted soon regarding it"
-
-        order_id_match = re.match(r"ord\d{5}", str_)
-        if order_id_match:
-            oid = str_.upper()
-            if self.context == "order_status":
-                return f"{oid} is out for delivery and should reach you by tomorrow."
-            elif self.context == "refund":
-                return f"A refund for {oid} has been approved and will be credited within 3-5 business days."
-            elif self.context == "return":
-                return f"Return initiated for {oid}. Pickup scheduled within 48 hours."
-            else:
-                return f"Thanks for providing {oid}. What would you like help with?"
-
-        if self.context in ["product_info", "product_stock"]:
-            product_name = str_.title()
-            self.last_product_query = product_name
-            product = products.get(product_name)
-    
-            if product:
-                if self.context == "product_info":
-                    return product["info"]
-                elif self.context == "product_stock":
-                    return f"Yes, {product_name} is in stock!" if product["stock"] else f"Sorry, {product_name} is currently out of stock."
-        
-        if "complaint" in str_:
-            self.context="complaint"
-        elif "order status" in str_ or "track my order" in str_:
-            self.context = "order_status"
-        elif "refund" in str_:
-            self.context = "refund"
-        elif "return" in str_:
-            self.context = "return"
-        elif "product info" in str_ or "product details" in str_:
-            self.context = "product_info"
-        elif "in stock" in str_:
-            self.context = "product_stock"
-       
-        else:
-            self.context = None
-
-        return super().respond(str_)
-
+# conversation pairs
 pairs = [
     # Greetings
-    [r"hi|hello|hey", ["Hello! How can I assist you today?"]],
-    [r"how are you", ["Doing great! Here to help you with any shopping issue."]],
-
-    # Orders
-    [r"(.*)order status(.*)", ["Sure! Please provide your order ID (e.g., ORD12345)."]],
-    [r"(.*)track(.*)", ["Sure! Please provide your order ID (e.g., ORD12345)."]],
-    [r"i want to know my order status", ["Absolutely, just share your order ID."]],
-
-    # Refunds & Returns
-    [r"(.*)refund(.*)", ["Refunds take 3–5 days. Please provide your order ID for more details."]],
-    [r"(.*)return(.*)", ["Returns accepted within 30 days. Share your order ID to continue."]],
-
-    # Product
-    [r"(.*)product (info|details)(.*)", ["What product are you referring to?"]],
-    [r"(.*)in stock(.*)", ["Let me check that for you. Which product are you interested in?"]],
+    [r"hi|hello|hey", ["Hello! Welcome to HotelBot. How can I assist you today?"]],
+    [r"how are you", ["I'm doing great! How can I help you with your hotel needs?"]],
     
-    # Account
-    [r"(.*)forgot password(.*)", ["You can reset your password via the 'Forgot Password' link."]],
-    [r"(.*)login problem(.*)", ["Try resetting your password or contact support if it persists."]],
-
-    # Shipping
-    [r"(.*)shipping charges(.*)", ["Shipping is free on orders above $50."]],
-    [r"(.*)delivery time(.*)", ["Delivery usually takes 3–5 business days."]],
-
-    # Store info
-    [r"(.*)store hours(.*)", ["Our stores are open from 9 AM to 9 PM, Mon–Sat."]],
-    [r"(.*)nearest store(.*)", ["Tell me your city, and I’ll find the nearest store."]],
-
-    # Complaints
-    [r"(.*)complaint(.*)", ["Please describe your issue, and I’ll log your complaint."]],
-
-    # Goodbye
-    [r"bye|exit|quit", ["Thanks for visiting E-Shop! Have a great day!"]],
-
+    # Book Room
+    [r"(.*)book(.*)room(.*)", ["To book a room, you can visit our website or call us at 123-456-7890. How can I assist you further?"]],
+    [r"(.*)reservation(.*)", ["You can make a reservation online through our website or give us a call at 123-456-7890. What else would you like to know?"]],
+    
+    # Menu
+    [r"(.*)menu(.*)", ["Our menu includes continental breakfast, sandwiches, soups, and salads. What would you like to order?"]],
+    [r"(.*)food(.*)", ["We offer a variety of meals including breakfast, lunch, and dinner. What would you like to have?"]],
+    
+    # Hours
+    [r"(.*)hours(.*)", ["Our hotel is open 24/7 to serve you. How can I assist you further?"]],
+    [r"(.*)open(.*)", ["We are open 24/7. Let me know if you need anything else."]],
+    
+    # Location
+    [r"(.*)location(.*)", ["Our hotel is located at 123 Main Street, City, State, ZIP. How can I help you further?"]],
+    [r"(.*)address(.*)", ["We are situated at 123 Main Street, City, State, ZIP. What else would you like to know?"]],
+    
+    # Contact
+    [r"(.*)contact(.*)", ["You can contact us at 123-456-7890 or email us at info@hotel.com. How can I assist you further?"]],
+    [r"(.*)phone(.*)", ["You can reach us at 123-456-7890. What else would you like to know?"]],
+    
+    # Exit
+    [r"exit|bye|quit", ["Goodbye! Thank you for visiting HotelBot. Have a great day!"]],
+    
     # Fallback
-    [r"(.*)", ["I didn’t get that. Can you rephrase or ask about orders, refunds, shipping, etc.?"]],
+    [r"(.*)", ["Sorry, I didn't understand that. Can you rephrase your question or ask about booking, menu, hours, location, etc.?"]],
 ]
 
-# Run the bot
-def run_chatbot():
-    print(" Welcome to E-Shop Support Bot! Type 'bye' to exit.")
-    chat = AdvancedEcomChat(pairs, reflections)
-    chat.converse()
+# Initialize the chatbot
+chatbot = Chat(pairs, reflections)
 
-if __name__ == "__main__":
-    run_chatbot()
+# Response function
+def respond(message, history):
+    return chatbot.respond(message)
+
+# Gradio UI
+demo = gr.ChatInterface(
+    fn=respond,
+    title="HotelBot",
+    description="Ask about booking a room, our menu, location, hours, or contact info.",
+    theme="soft"
+)
+
+# Launch the chatbot
+demo.launch()
