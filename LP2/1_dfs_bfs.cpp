@@ -86,6 +86,20 @@ void dfsRecursive(int node, const vector<vector<int>>& graph, vector<bool>& visi
 }
 
 int main() {
+//     cout << "Enter number of vertices: ";
+//     cin >> V;
+//     cout << "Enter number of edges: ";
+//     cin >> E;
+
+//     vector<vector<int>> graph(V);
+
+//     cout << "Enter " << E << " edges (format: u v):\n";
+//     for (int i = 0; i < E; ++i) {
+//         int u, v;
+//         cin >> u >> v;
+//         addEdge(graph, u, v);
+//     }
+
     int V = 9;
     vector<vector<int>> graph(V);
 
@@ -116,3 +130,5 @@ int main() {
 
     return 0;
 }
+
+

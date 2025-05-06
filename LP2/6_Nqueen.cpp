@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// ========== Original Backtracking ==========
+// ==========  Backtracking ==========
 
 bool isSafe(int row, int col, const vector<vector<int>> &board, int n) {
     for (int i = 0; i < n; i++) {
@@ -25,16 +25,19 @@ bool isSafe(int row, int col, const vector<vector<int>> &board, int n) {
     return true;
 }
 
-bool solveNQueens(vector<vector<int>> &board, int col, int n) {
-    if (col >= n)
-        return true;
+bool solveNQueens(vector<vector<int>> &board, int col, int n, vector<vector<vector<int>>> &solutions) {
+    if (col >= n) {
+        solutions.push_back(board);  // Store the current solution
+        return false;  // Continue to find other solutions
+    }
 
     for (int row = 0; row < n; row++) {
         if (isSafe(row, col, board, n)) {
             board[row][col] = 1;
-            if (solveNQueens(board, col + 1, n))
+            // Recur to place the next queen
+            if (solveNQueens(board, col + 1, n, solutions))
                 return true;
-            board[row][col] = 0;
+            board[row][col] = 0;  // Backtrack
         }
     }
     return false;
@@ -43,7 +46,7 @@ bool solveNQueens(vector<vector<int>> &board, int col, int n) {
 void printSolution(const vector<vector<int>> &board) {
     for (const auto &row : board) {
         for (int cell : row)
-            cout << cell << " ";
+            cout << (cell == 1 ? "Q " : ". ");  // Represent queen and empty space
         cout << endl;
     }
     cout << endl;
@@ -81,27 +84,33 @@ int main() {
     cin >> n;
 
     vector<vector<int>> board(n, vector<int>(n, 0));
+    vector<vector<vector<int>>> solutions;  // Corrected to store multiple solutions
 
     cout << "\n--- Using Backtracking ---\n";
-    if (solveNQueens(board, 0, n)) {
+    if (solveNQueens(board, 0, n, solutions)) {
         cout << "Solution exists:\n";
         printSolution(board);
     } else {
         cout << "No solution exists\n";
     }
 
+    cout << "\nFound " << solutions.size() << " solution(s) using Backtracking:\n";
+    for (const auto &sol : solutions) {
+        printSolution(sol);  // Correct print call
+    }
+
     cout << "\n\n--- Using Branch and Bound ---\n";
     vector<vector<int>> boardBB(n, vector<int>(n, 0));
     vector<bool> row(n, false), diag1(2 * n - 1, false), diag2(2 * n - 1, false);
-    vector<vector<vector<int>>> solutions;
+    vector<vector<vector<int>>> bb_solutions;
 
-    solveBB(0, n, boardBB, row, diag1, diag2, solutions);
+    solveBB(0, n, boardBB, row, diag1, diag2, bb_solutions);
 
-    if (solutions.empty()) {
+    if (bb_solutions.empty()) {
         cout << "No solution exists\n";
     } else {
-        cout << solutions.size() << " solution(s):\n\n";
-        for (const auto &sol : solutions)
+        cout << bb_solutions.size() << " solution(s) found using Branch and Bound:\n\n";
+        for (const auto &sol : bb_solutions)
             printSolution(sol);
     }
 

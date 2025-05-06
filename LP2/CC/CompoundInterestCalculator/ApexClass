@@ -1,0 +1,26 @@
+public class CompoundInterestCalculator {
+    public Decimal principal { get; set; }
+    public Decimal annualRate { get; set; } // in percentage
+    public Integer timeYears { get; set; }
+    public Integer compoundsPerYear { get; set; }
+
+    public Decimal totalAmount { get; set; }
+    public Decimal compoundInterest { get; set; }
+
+    public CompoundInterestCalculator() {
+        principal = 0;
+        annualRate = 0;
+        timeYears = 0;
+        compoundsPerYear = 1;
+        totalAmount = 0;
+        compoundInterest = 0;
+    }
+
+    public void calculateInterest() {
+        Decimal rateDecimal = annualRate / 100;
+        Decimal base = 1 + (rateDecimal / compoundsPerYear);
+        Decimal exponent = timeYears * compoundsPerYear;
+        totalAmount = principal * Math.pow(base, exponent);
+        compoundInterest = totalAmount - principal;
+    }
+}

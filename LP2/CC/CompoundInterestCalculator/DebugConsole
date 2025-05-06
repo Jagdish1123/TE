@@ -1,0 +1,10 @@
+CompoundInterestCalculator ci = new CompoundInterestCalculator();
+ci.principal = 10000;
+ci.annualRate = 5;
+ci.timeYears = 2;
+ci.compoundsPerYear = 1;
+
+ci.calculateInterest();
+
+System.debug('Total Amount: ' + ci.totalAmount);
+System.debug('Compound Interest: ' + ci.compoundInterest);

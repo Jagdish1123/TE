@@ -17,7 +17,7 @@ public:
 
 // calculate the heuristic
 int heuristic(Node *start, Node *end)
-{
+{   //Manhattan Distance
     return abs(start->x - end->x) + abs(start->y - end->y);
 }
 
@@ -190,3 +190,76 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+// int main()
+// {
+//     int rows, cols;
+//     cout << "Enter grid size (rows cols): ";
+//     cin >> rows >> cols;
+
+//     // Create grid
+//     vector<vector<Node>> grid(rows, vector<Node>(cols, Node(0, 0)));
+
+//     // Initialize nodes with coordinates
+//     for (int i = 0; i < rows; ++i)
+//     {
+//         for (int j = 0; j < cols; ++j)
+//         {
+//             grid[i][j] = Node(i, j);
+//         }
+//     }
+
+//     // Get start and end points
+//     int x1, y1, x2, y2;
+//     cout << "Enter start coordinates (x y): ";
+//     cin >> x1 >> y1;
+//     cout << "Enter end coordinates (x y): ";
+//     cin >> x2 >> y2;
+
+//     // Get obstacles
+//     int obsCount;
+//     cout << "Enter number of obstacles: ";
+//     cin >> obsCount;
+//     cout << "Enter obstacle coordinates (x y):\n";
+//     for (int i = 0; i < obsCount; ++i)
+//     {
+//         int ox, oy;
+//         cin >> ox >> oy;
+//         if (ox >= 0 && ox < rows && oy >= 0 && oy < cols)
+//         {
+//             grid[ox][oy].obstacle = true;
+//         }
+//         else
+//         {
+//             cout << "Invalid coordinates. Skipping.\n";
+//         }
+//     }
+
+//     // Run A* search
+//     Node *start = &grid[x1][y1];
+//     Node *end = &grid[x2][y2];
+
+//     vector<Node *> path = aStar(grid, start, end);
+
+//     // Display grid and result
+//     displayGrid(grid);
+
+//     if (!path.empty())
+//     {
+//         cout << "Path found:\n";
+//         for (Node *node : path)
+//         {
+//             cout << "(" << node->x << ", " << node->y << ")\n";
+//         }
+//     }
+//     else
+//     {
+//         cout << "No path found.\n";
+//     }
+
+//     return 0;
+// }
