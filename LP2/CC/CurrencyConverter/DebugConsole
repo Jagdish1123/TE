@@ -1,0 +1,15 @@
+CurrencyConverter cc = new CurrencyConverter();
+
+// Example: Convert 100 USD to INR
+cc.amount = 100;
+cc.fromCurrency = 'USD';
+cc.toCurrency = 'INR';
+cc.convert();
+System.debug('100 USD to INR: ' + cc.convertedAmount);
+
+// Example: Convert 1000 INR to USD
+cc.amount = 1000;
+cc.fromCurrency = 'INR';
+cc.toCurrency = 'USD';
+cc.convert();
+System.debug('1000 INR to USD: ' + cc.convertedAmount);

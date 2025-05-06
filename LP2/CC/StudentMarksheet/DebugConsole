@@ -1,0 +1,11 @@
+StudentMarksheet sm = new StudentMarksheet();
+sm.studentName = 'Jay';
+sm.marksMath = 78;
+sm.marksScience = 85;
+sm.marksEnglish = 90;
+sm.generateMarksheet();
+
+System.debug('Student: ' + sm.studentName);
+System.debug('Total Marks: ' + sm.totalMarks);
+System.debug('Average Marks: ' + sm.averageMarks);
+System.debug('Grade: ' + sm.grade);

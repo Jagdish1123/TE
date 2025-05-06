@@ -1,0 +1,4 @@
+ElectricityBill bill = new ElectricityBill();
+bill.units = 350;
+bill.calculateBill();
+System.debug('Total Bill: ₹ ' + bill.billAmount);

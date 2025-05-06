@@ -1,0 +1,37 @@
+public class StudentMarksheet {
+    public String studentName { get; set; }
+    public Integer marksMath { get; set; }
+    public Integer marksScience { get; set; }
+    public Integer marksEnglish { get; set; }
+
+    public Integer totalMarks { get; set; }
+    public Decimal averageMarks { get; set; }
+    public String grade { get; set; }
+
+    public StudentMarksheet() {
+        studentName = '';
+        marksMath = 0;
+        marksScience = 0;
+        marksEnglish = 0;
+        totalMarks = 0;
+        averageMarks = 0;
+        grade = '';
+    }
+
+    public void generateMarksheet() {
+        totalMarks = marksMath + marksScience + marksEnglish;
+        averageMarks = totalMarks / 3.0;
+
+        if (averageMarks >= 90) {
+            grade = 'A+';
+        } else if (averageMarks >= 75) {
+            grade = 'A';
+        } else if (averageMarks >= 60) {
+            grade = 'B';
+        } else if (averageMarks >= 45) {
+            grade = 'C';
+        } else {
+            grade = 'F';
+        }
+    }
+}

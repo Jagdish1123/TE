@@ -1,0 +1,31 @@
+public class MathCalculator {
+    public Integer number1 { get; set; }
+    public Integer number2 { get; set; }
+    public String operation { get; set; }
+    public String result { get; set; }
+
+    public MathCalculator() {
+        number1 = 0;
+        number2 = 0;
+        operation = '+';
+        result = '';
+    }
+
+    public void calculate() {
+        if(operation == '+') {
+            result = String.valueOf(number1 + number2);
+        } else if(operation == '-') {
+            result = String.valueOf(number1 - number2);
+        } else if(operation == '*') {
+            result = String.valueOf(number1 * number2);
+        } else if(operation == '/') {
+            if(number2 != 0) {
+                result = String.valueOf((Decimal)number1 / number2);
+            } else {
+                result = 'Error: Cannot divide by zero';
+            }
+        } else {
+            result = 'Invalid operation';
+        }
+    }
+}

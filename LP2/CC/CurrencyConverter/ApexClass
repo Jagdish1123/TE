@@ -1,0 +1,30 @@
+public class CurrencyConverter {
+    public Decimal amount { get; set; }
+    public String fromCurrency { get; set; }
+    public String toCurrency { get; set; }
+    public Decimal convertedAmount { get; set; }
+
+    public CurrencyConverter() {
+        amount = 0;
+        fromCurrency = 'USD';
+        toCurrency = 'INR';
+        convertedAmount = 0;
+    }
+
+    public void convert() {
+        if (fromCurrency == 'USD' && toCurrency == 'INR') {
+            convertedAmount = amount * 83;
+        } else if (fromCurrency == 'INR' && toCurrency == 'USD') {
+            convertedAmount = amount * 0.012;
+        } else {
+            convertedAmount = amount; // Same currency, no conversion
+        }
+    }
+
+    public List<SelectOption> getCurrencyOptions() {
+        return new List<SelectOption>{
+            new SelectOption('USD', 'USD'),
+            new SelectOption('INR', 'INR')
+        };
+    }
+}

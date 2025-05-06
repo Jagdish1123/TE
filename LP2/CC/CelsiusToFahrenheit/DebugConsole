@@ -1,0 +1,4 @@
+CelsiusToFahrenheit converter = new CelsiusToFahrenheit();
+converter.celsius = 100;
+converter.convert();
+System.debug('Fahrenheit: ' + converter.fahrenheit);

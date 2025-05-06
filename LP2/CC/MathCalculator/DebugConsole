@@ -1,0 +1,7 @@
+MathCalculator calc = new MathCalculator();
+calc.number1 = 10;
+calc.number2 = 5;
+calc.operation = '*';
+calc.calculate();
+
+System.debug('Calculation Result: ' + calc.result);

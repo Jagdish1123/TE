@@ -1,0 +1,22 @@
+<apex:page controller="GreatestOfThree">
+    <h2>Find the Greatest Among Three Numbers</h2>
+    <apex:form>
+        <apex:pageBlock title="Enter Numbers">
+
+            <apex:pageBlockSection columns="1">
+                <apex:inputText label="Number 1" value="{!num1}" />
+                <apex:inputText label="Number 2" value="{!num2}" />
+                <apex:inputText label="Number 3" value="{!num3}" />
+            </apex:pageBlockSection>
+
+            <apex:commandButton value="Find Greatest" action="{!findGreatest}" reRender="resultPanel"/>
+
+            <apex:outputPanel id="resultPanel">
+                <apex:pageBlockSection title="Result">
+                    <apex:outputText value="{!result}" />
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,23 @@
+public class GreatestOfThree {
+    public Integer num1 { get; set; }
+    public Integer num2 { get; set; }
+    public Integer num3 { get; set; }
+    public String result { get; set; }
+
+    public GreatestOfThree() {
+        num1 = 0;
+        num2 = 0;
+        num3 = 0;
+        result = '';
+    }
+
+    public void findGreatest() {
+        if (num1 >= num2 && num1 >= num3) {
+            result = 'The greatest number is: ' + num1;
+        } else if (num2 >= num1 && num2 >= num3) {
+            result = 'The greatest number is: ' + num2;
+        } else {
+            result = 'The greatest number is: ' + num3;
+        }
+    }
+}

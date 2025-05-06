@@ -1,0 +1,6 @@
+GreatestOfThree obj = new GreatestOfThree();
+obj.num1 = 45;
+obj.num2 = 89;
+obj.num3 = 72;
+obj.findGreatest();
+System.debug(obj.result);
